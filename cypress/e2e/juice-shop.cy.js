@@ -71,7 +71,7 @@ describe("Juice-shop with Auto login", () => {
     HomePage.visit();
   });
 
-  it.only("Search and validate Lemon", () => {
+  it("Search and validate Lemon", () => {
     HomePage.searchBtn.click();
     HomePage.searchBtnInput.type("Lemon{enter}"); 
     SearchPage.lemonJuice.click();
@@ -82,12 +82,29 @@ describe("Juice-shop with Auto login", () => {
     // Validate that the card (should) contains "Sour but full of vitamins."
   });
 
-  // Create scenario - Search 500ml and validate Lemon, while having multiple cards
+  it("Search 500ml and validate Lemon, while having multiple cards", () => {
+    HomePage.searchBtn.click();
+    HomePage.searchBtnInput.type("500ml{enter}"); 
+    SearchPage.lemonJuice.should("be.visible").click();
+    SearchPage.itemDialog.should("contain.text", 'Sour but full of vitamins.')
+      // Create scenario - Search 500ml and validate Lemon, while having multiple cards
   // Click on search icon
   // Search for 500ml
   // Select a product card - Lemon Juice (500ml)
   // Validate that the card (should) contains "Sour but full of vitamins."
+  });
 
+  it("Search 500ml and validate cards", () => {  
+    HomePage.searchBtn.click();
+    HomePage.searchBtnInput.type("500ml{enter}"); 
+    SearchPage.eggfruitJuice.should("be.visible").click();
+    SearchPage.itemDialog.should("contain.text", 'Now with even more exotic flavour.')
+    SearchPage.closeDialog.should("be.visible").click();
+    SearchPage.lemonJuice.should("be.visible").click();
+    SearchPage.itemDialog.should("contain.text", 'Sour but full of vitamins.')
+    SearchPage.closeDialog.should("be.visible").click();
+    SearchPage.strawberryJuice.should("be.visible").click();
+    SearchPage.itemDialog.should("contain.text", 'Sweet & tasty!')
   // Create scenario - Search 500ml and validate cards
   // Click on search icon
   // Search for 500ml
@@ -99,6 +116,15 @@ describe("Juice-shop with Auto login", () => {
   // Close the card
   // Select a product card - Strawberry Juice (500ml)
   // Validate that the card (should) contains "Sweet & tasty!"
+  });
+
+  it("Read a review", () => {
+    HomePage.searchBtn.click();
+    HomePage.searchBtnInput.type("King{enter}"); 
+    SearchPage.kingMask.should("be.visible").click();
+    cy.wait(500);
+    SearchPage.reviewPanel.should("be.visible").click();
+    SearchPage.reviewPanelBody.should("be.visible").should("contain.text", "K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!");
 
   // Create scenario - Read a review
   // Click on search icon
@@ -106,6 +132,17 @@ describe("Juice-shop with Auto login", () => {
   // Select a product card - OWASP Juice Shop "King of the Hill" Facemask
   // Click expand reviews button/icon (wait for reviews to appear)
   // Validate review - K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!
+  });
+
+  it.only("Add a review", () => {
+    HomePage.searchBtn.click();
+    HomePage.searchBtnInput.type("Raspberry{enter}"); 
+    SearchPage.raspberryJuice.should("be.visible").click();
+    cy.wait(500);
+    SearchPage.reviewField.type("Tastes like metal");
+    SearchPage.submitBtn.should("be.enabled").should("be.visible").click();
+    SearchPage.reviewPanel.should("be.visible").click();
+    SearchPage.reviewPanelBody.should("be.visible").should("contain.text", "Tastes like metal");
 
   // Create scenario - Add a review
   // Click on search icon
@@ -115,6 +152,13 @@ describe("Juice-shop with Auto login", () => {
   // Click Submit
   // Click expand reviews button/icon (wait for reviews to appear)
   // Validate review -  "Tastes like metal"
+  });
+
+
+
+
+
+
 
   // Create scenario - Validate product card amount
   // Validate that the default amount of cards is 12
