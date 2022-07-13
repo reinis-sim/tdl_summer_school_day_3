@@ -1,6 +1,7 @@
 import HomePage from "../pageObjects/HomePage";
 import LoginPage from "../pageObjects/LoginPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
+import SearchPage from "../pageObjects/SearchPage";
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -10,8 +11,13 @@ describe("Juice-shop without auto login", () => {
   });
 
   it("Login", () => {
-    // Click Account button
-    // Click Login button
+    HomePage.accountBtn.should("be.visible").click();
+    HomePage.loginBtn.should("be.visible").click();
+    LoginPage.userEmail.should("be.visible").type("demo");
+    LoginPage.userPassword.should("be.visible").type("demo");
+    LoginPage.loginBtn.should("be.visible").click();
+    SearchPage.accountBtn.should("be.visible").click();
+    SearchPage.profileBtn.should("contain.text", "demo");
     // Set email value to "demo"
     // Set password value to "demo"
     // Click Log in
@@ -19,7 +25,27 @@ describe("Juice-shop without auto login", () => {
     // Validate that "demo" account name appears in the menu section
   });
 
-  it("Registration", () => {
+  it.only("Registration", () => {
+    HomePage.accountBtn.should("be.visible").click();
+    HomePage.loginBtn.should("be.visible").click();
+    LoginPage.registerBtn.should("be.visible").click();
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    const randomEmail = "email_"+randomNum+"@ebox.com";
+    RegistrationPage.emailField.type(randomEmail);
+    RegistrationPage.passwordField.should("be.visible").type("testPassword123");
+    RegistrationPage.repeatPasswordField.should("be.visible").type("testPassword123");
+    RegistrationPage.secQuestion.should("be.visible").click();
+    RegistrationPage.petName.click();
+    RegistrationPage.answerField.should("be.visible").type("Generic cat name");
+    RegistrationPage.registerBtn.should("be.visible").click();
+    LoginPage.userEmail.should("be.visible").type(randomEmail);
+    LoginPage.userPassword.should("be.visible").type("testPassword123");
+    LoginPage.loginBtn.should("be.visible").click();
+    SearchPage.accountBtn.should("be.visible").click();
+    SearchPage.profileBtn.should("contain.text", randomEmail);
+
+    
+
     // Click Account button
     // Login button
     // Click "Not yet a customer?"
