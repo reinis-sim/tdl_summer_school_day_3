@@ -134,7 +134,7 @@ describe("Juice-shop with Auto login", () => {
   // Validate review - K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!
   });
 
-  it.only("Add a review", () => {
+  it("Add a review", () => {
     HomePage.searchBtn.click();
     HomePage.searchBtnInput.type("Raspberry{enter}"); 
     SearchPage.raspberryJuice.should("be.visible").click();
@@ -160,12 +160,25 @@ describe("Juice-shop with Auto login", () => {
 
 
 
+  it.only("Validate product card amount", () => {
+    SearchPage.prodAmountSelected.should("have.text", " 1 – 12 of 35 ");
+    SearchPage.prodAmount.click();
+    SearchPage.prodAmountSelect24.click();
+    SearchPage.prodAmountSelected.should("have.text", " 1 – 24 of 35 ");
+    SearchPage.prodAmount.click();
+    SearchPage.prodAmountSelect36.click();
+    SearchPage.prodAmountSelected.should("have.text", " 1 – 35 of 35 ");
+
+
   // Create scenario - Validate product card amount
   // Validate that the default amount of cards is 12
   // Change items per page (at the bottom of page) to 24
   // Validate that the amount of cards is 24
   // Change items per page (at the bottom of page) to 36
   // Validate that the amount of cards is 35
+  });
+
+
 
   // Create scenario - Buy Girlie T-shirt
   // Click on search icon

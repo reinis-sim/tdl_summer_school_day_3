@@ -44,6 +44,19 @@ class SearchPage extends BasePage {
   static get submitBtn(){
     return cy.get('#submitButton');
   }
+  static get prodAmount(){
+    return cy.get('.mat-select-min-line');
+  }
+  static get prodAmountSelect24(){
+    return cy.get('.mat-option-text').contains("24");
+  }
+  static get prodAmountSelect36(){
+    return cy.get('.mat-option-text').contains("36");
+  }
+  static get prodAmountSelected(){
+    return cy.get('.mat-paginator-range-label');
+  }
+
 }
 
 export default SearchPage;
