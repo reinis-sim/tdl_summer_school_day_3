@@ -11,6 +11,15 @@ class SearchPage extends BasePage {
   static get profileBtn(){
     return cy.get('[aria-label="Go to user profile"]');
   }
+  static get ordersAndPaymentBtn(){
+    return cy.get('[aria-label="Show Orders and Payment Menu"][role="menuitem"]');
+  }
+  static get myPaymentOptionsBtn(){
+    return cy.get('[aria-label="Go to saved payment methods page"]');
+  }
+  static get myAddresses(){
+    return cy.get('[aria-label="Go to saved address page"]');
+  }
   static get lemonJuice(){
     return cy.get('.item-name').contains(" Lemon Juice (500ml) ");
   }
@@ -56,7 +65,12 @@ class SearchPage extends BasePage {
   static get prodAmountSelected(){
     return cy.get('.mat-paginator-range-label');
   }
-
+  static get shirtBasket(){
+    return cy.get('[aria-label="Add to Basket"]');
+  }
+  static get shoppingCart(){
+    return cy.get('[aria-label="Show the shopping cart"]');
+  }
 }
 
 export default SearchPage;

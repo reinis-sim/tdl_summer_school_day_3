@@ -1,7 +1,17 @@
+import BasePage from "../pageObjects/basePage";
+import BasketPage from "../pageObjects/BasketPage";
+import CreateAddressPage from "../pageObjects/CreateAddressPage";
+import DeliveryMethodPage from "../pageObjects/DeliveryMethodPage";
 import HomePage from "../pageObjects/HomePage";
 import LoginPage from "../pageObjects/LoginPage";
+import OrderCompletionPage from "../pageObjects/OrderCompletionPage";
+import OrderSummaryPage from "../pageObjects/OrderSummaryPage";
+import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
+import SavedAddressesPage from "../pageObjects/SavedAddressesPage";
+import SavedPaymentOptionsPage from "../pageObjects/SavedPaymentOptionsPage";
 import SearchPage from "../pageObjects/SearchPage";
+import SelectAddressPage from "../pageObjects/SelectAddressPage";
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -160,7 +170,7 @@ describe("Juice-shop with Auto login", () => {
 
 
 
-  it.only("Validate product card amount", () => {
+  it("Validate product card amount", () => {
     SearchPage.prodAmountSelected.should("have.text", " 1 – 12 of 35 ");
     SearchPage.prodAmount.click();
     SearchPage.prodAmountSelect24.click();
@@ -179,6 +189,20 @@ describe("Juice-shop with Auto login", () => {
   });
 
 
+  it("Buy Girlie T-shirt", () => {
+    HomePage.searchBtn.should("be.visible").click();
+    HomePage.searchBtnInput.should("be.visible").type("Girlie{enter}"); 
+    SearchPage.shirtBasket.should("be.visible").click(); 
+    SearchPage.shoppingCart.should("be.visible").click();
+    BasketPage.checkoutBtn.should("be.visible").click();
+    SelectAddressPage.unitedFake.should("be.visible").click();
+    SelectAddressPage.continueBtn.should("be.enabled").should("be.visible").click();
+    DeliveryMethodPage.standardDelivery.should("be.visible").click();
+    DeliveryMethodPage.continueBtn.should("be.visible").click();
+    PaymentOptionsPage.cardSelect.click();
+    PaymentOptionsPage.continueBtn.should("be.visible").click();
+    OrderSummaryPage.placeOrder.should("be.visible").click();
+    OrderCompletionPage.completed.should("be.visible").should("contain.text", "Thank you for your purchase!");
 
   // Create scenario - Buy Girlie T-shirt
   // Click on search icon
@@ -200,6 +224,24 @@ describe("Juice-shop with Auto login", () => {
   // Click on "Place your order and pay"
   // Create page object - OrderCompletionPage
   // Validate confirmation - "Thank you for your purchase!"
+  });
+
+  it("Add address", () => {
+    SearchPage.accountBtn.should("be.visible").click();
+    SearchPage.ordersAndPaymentBtn.should("be.visible").click();
+    SearchPage.myAddresses.should("be.visible").click();
+    SavedAddressesPage.addAddress.should("be.visible").click();
+    CreateAddressPage.country.should("be.visible").type("Testland");
+    CreateAddressPage.name.should("be.visible").type("Timothy");
+    CreateAddressPage.number.should("be.visible").type("09831233");
+    CreateAddressPage.zipCode.should("be.visible").type("9082");
+    CreateAddressPage.address.should("be.visible").type("An address");
+    CreateAddressPage.city.should("be.visible").type("Ventspils");
+    CreateAddressPage.state.should("be.visible").type("New York");
+    CreateAddressPage.submitBtn.should("be.visible").click();
+    SavedAddressesPage.addressTable.should("contain.text", ' Dummystreet 42, Mocktown, Testilvania, 12345 ')
+
+
 
   // Create scenario - Add address
   // Click on Account
@@ -211,6 +253,21 @@ describe("Juice-shop with Auto login", () => {
   // Fill in the necessary information
   // Click Submit button
   // Validate that previously added address is visible
+  });
+
+  it.only("Add payment option", () => {
+    SearchPage.accountBtn.should("be.visible").click();
+    SearchPage.ordersAndPaymentBtn.should("be.visible").click();
+    SearchPage.myPaymentOptionsBtn.should("be.visible").click();
+    SavedPaymentOptionsPage.newCard.should("be.visible").click();
+    SavedPaymentOptionsPage.name.should("be.visible").type("Timothy");
+    SavedPaymentOptionsPage.cardNumber.should("be.visible").type("1234567890098765");
+    SavedPaymentOptionsPage.cardMonth.should("be.visible").select("7");
+    SavedPaymentOptionsPage.cardYear.should("be.visible").select("2090");
+    SavedPaymentOptionsPage.submitBtn.should("be.visible").click();
+    SavedPaymentOptionsPage.paymentTable.should("be.visible").should("contain.text", "************8765 ")
+
+
 
   // Create scenario - Add payment option
   // Click on Account
@@ -224,4 +281,7 @@ describe("Juice-shop with Auto login", () => {
   // Set expiry year to 2090
   // Click Submit button
   // Validate that the card shows up in the list
+  });
+
+
 });

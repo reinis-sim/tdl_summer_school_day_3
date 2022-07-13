@@ -5,9 +5,7 @@ class LoginPage extends BasePage {
     return '/#/login';
   }
 
-  static get elementName(){
-    return cy.get('elementSelector');
-  }
+
   static get userEmail(){
     return cy.get('#email');
   }
