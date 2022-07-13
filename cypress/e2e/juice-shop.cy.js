@@ -25,7 +25,7 @@ describe("Juice-shop without auto login", () => {
     // Validate that "demo" account name appears in the menu section
   });
 
-  it.only("Registration", () => {
+  it("Registration", () => {
     HomePage.accountBtn.should("be.visible").click();
     HomePage.loginBtn.should("be.visible").click();
     LoginPage.registerBtn.should("be.visible").click();
@@ -71,7 +71,11 @@ describe("Juice-shop with Auto login", () => {
     HomePage.visit();
   });
 
-  it("Search and validate Lemon", () => {
+  it.only("Search and validate Lemon", () => {
+    HomePage.searchBtn.click();
+    HomePage.searchBtnInput.type("Lemon{enter}"); 
+    SearchPage.lemonJuice.click();
+    SearchPage.itemDialog.should("contain.text", 'Sour but full of vitamins.')
     // Click on search icon
     // Search for Lemon
     // Select a product card - Lemon Juice (500ml)

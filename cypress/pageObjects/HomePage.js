@@ -18,6 +18,13 @@ class HomePage extends BasePage {
   static get loginBtn(){
     return cy.get('[id="navbarLoginButton"]');
   }
+  static get searchBtn(){
+    return cy.get('.mat-search_icon-search');
+  }
+  static get searchBtnInput(){
+    return cy.get('.mat-input-element');
+  }
+
 }
 
 export default HomePage;
